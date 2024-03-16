@@ -2,7 +2,7 @@
 ![pngeo](https://github.com/LillycatVtube/PNGeo/assets/157961265/163bc71f-fca8-4eea-8ca1-7e27c33a97b5)
 # PNGeo (A Linux PNGtuber Software)
 
-PNGeo is a Free, Open source, and in developemnt PNGtuber software for Linux powered by the Godot game engine!
+PNGeo is a Free, Open source, and in development PNGtuber software for Linux powered by the Godot game engine!
 
 
 # About PNGeo
