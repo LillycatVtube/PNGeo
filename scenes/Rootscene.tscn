@@ -1,0 +1,336 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://code/root/CharacterRoot.gd" type="Script" id=1]
+[ext_resource path="res://assets/default_res/lillycat0.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://code/Rootscene.gd" type="Script" id=3]
+[ext_resource path="res://code/root/UI.gd" type="Script" id=4]
+[ext_resource path="res://scenes/PNGtuberMaker.tscn" type="PackedScene" id=5]
+[ext_resource path="res://code/root/ExpressionKey.gd" type="Script" id=6]
+
+[sub_resource type="AudioStreamMicrophone" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 109, 305 )
+
+[sub_resource type="CircleShape2D" id=3]
+
+[node name="Rootscene" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 1 )
+autoplay = true
+mix_target = 2
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+margin_right = 1549.0
+margin_bottom = 832.0
+color = Color( 0, 1, 0, 1 )
+
+[node name="CharacterRoot" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="RootSprite" type="AnimatedSprite" parent="CharacterRoot"]
+position = Vector2( 391, 220 )
+frames = ExtResource( 2 )
+animation = "normal_silent"
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="UI" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="RootUI" type="Control" parent="UI"]
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/RootUI"]
+margin_right = 206.0
+margin_bottom = 599.0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/RootUI/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 199.0
+margin_bottom = 592.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/RootUI/PanelContainer/MarginContainer"]
+margin_right = 192.0
+margin_bottom = 585.0
+
+[node name="Label" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_right = 192.0
+margin_bottom = 14.0
+text = "--General Settings--"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 192.0
+margin_bottom = 22.0
+
+[node name="GridContainer" type="GridContainer" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 26.0
+margin_right = 192.0
+margin_bottom = 118.0
+size_flags_horizontal = 3
+columns = 2
+
+[node name="Label" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 5.0
+margin_right = 98.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Transparent BG"
+
+[node name="TransparentWindow" type="CheckBox" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 102.0
+margin_right = 126.0
+margin_bottom = 24.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+pressed = true
+
+[node name="Label5" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 31.0
+margin_right = 98.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+text = "BG Color"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 102.0
+margin_top = 28.0
+margin_right = 192.0
+margin_bottom = 48.0
+color = Color( 0, 1, 0, 1 )
+
+[node name="Label2" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 53.0
+margin_right = 98.0
+margin_bottom = 67.0
+text = "Voice Level"
+
+[node name="VoiceLevel" type="HSlider" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 102.0
+margin_top = 52.0
+margin_right = 192.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+max_value = 0.9
+step = 0.01
+value = 0.5
+
+[node name="Label4" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 75.0
+margin_right = 98.0
+margin_bottom = 89.0
+text = "Microphone"
+
+[node name="MicButton" type="OptionButton" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 102.0
+margin_top = 72.0
+margin_right = 192.0
+margin_bottom = 92.0
+clip_text = true
+
+[node name="HSeparator2" type="HSeparator" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 122.0
+margin_right = 192.0
+margin_bottom = 126.0
+
+[node name="Label2" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 130.0
+margin_right = 192.0
+margin_bottom = 144.0
+text = "--PNGtuber Settings--"
+align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 148.0
+margin_right = 192.0
+margin_bottom = 152.0
+
+[node name="GridContainer2" type="GridContainer" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 156.0
+margin_right = 192.0
+margin_bottom = 300.0
+columns = 2
+
+[node name="Label" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_top = 3.0
+margin_right = 80.0
+margin_bottom = 17.0
+text = "Defualt Look"
+
+[node name="ExpressionButton" type="OptionButton" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_left = 84.0
+margin_right = 192.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Normal"
+align = 1
+items = [ "Normal", null, false, 0, null, "Happy", null, false, 1, null, "Excited", null, false, 2, null, "Angry", null, false, 3, null ]
+selected = 0
+
+[node name="Label2" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_top = 29.0
+margin_right = 80.0
+margin_bottom = 43.0
+text = "Enable Keys"
+
+[node name="KeyEnable" type="CheckBox" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_left = 84.0
+margin_top = 24.0
+margin_right = 192.0
+margin_bottom = 48.0
+
+[node name="Label3" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_top = 55.0
+margin_right = 80.0
+margin_bottom = 69.0
+text = "Normal Key"
+
+[node name="NormalKey" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_left = 84.0
+margin_top = 52.0
+margin_right = 192.0
+margin_bottom = 72.0
+disabled = true
+toggle_mode = true
+script = ExtResource( 6 )
+
+[node name="Label4" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_top = 79.0
+margin_right = 80.0
+margin_bottom = 93.0
+text = "Happy Key"
+
+[node name="HappyKey" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_left = 84.0
+margin_top = 76.0
+margin_right = 192.0
+margin_bottom = 96.0
+disabled = true
+toggle_mode = true
+script = ExtResource( 6 )
+buttontype = 1
+action = "ui_down"
+
+[node name="Label5" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_top = 103.0
+margin_right = 80.0
+margin_bottom = 117.0
+text = "Excited Key"
+
+[node name="ExcitedKey" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_left = 84.0
+margin_top = 100.0
+margin_right = 192.0
+margin_bottom = 120.0
+disabled = true
+toggle_mode = true
+script = ExtResource( 6 )
+buttontype = 2
+action = "ui_left"
+
+[node name="Label6" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_top = 127.0
+margin_right = 80.0
+margin_bottom = 141.0
+text = "Angry Key"
+
+[node name="AngryKey" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2"]
+margin_left = 84.0
+margin_top = 124.0
+margin_right = 192.0
+margin_bottom = 144.0
+disabled = true
+toggle_mode = true
+script = ExtResource( 6 )
+buttontype = 3
+action = "ui_right"
+
+[node name="HSeparator4" type="HSeparator" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 304.0
+margin_right = 192.0
+margin_bottom = 308.0
+
+[node name="Label3" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 312.0
+margin_right = 192.0
+margin_bottom = 326.0
+text = "--PNGeo Settings--"
+align = 1
+
+[node name="HSeparator5" type="HSeparator" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 330.0
+margin_right = 192.0
+margin_bottom = 334.0
+
+[node name="GridContainer3" type="VBoxContainer" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 338.0
+margin_right = 192.0
+margin_bottom = 406.0
+
+[node name="LoadTuber" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3"]
+margin_right = 192.0
+margin_bottom = 20.0
+text = "Load PNGtuber"
+
+[node name="OpenMaker" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3"]
+margin_top = 24.0
+margin_right = 192.0
+margin_bottom = 44.0
+text = "Open PNGtuber Maker"
+
+[node name="SaveSettings" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3"]
+margin_top = 48.0
+margin_right = 192.0
+margin_bottom = 68.0
+text = "Save Settings"
+
+[node name="LoadPNGtuber" type="FileDialog" parent="UI/RootUI"]
+margin_left = 276.0
+margin_top = 79.0
+margin_right = 782.0
+margin_bottom = 466.0
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 2
+filters = PoolStringArray( "*.tres" )
+show_hidden_files = true
+
+[node name="PNGtuberMaker" parent="." instance=ExtResource( 5 )]
+visible = false
+
+[node name="StaticBody2D" type="Area2D" parent="."]
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 99, 295 )
+shape = SubResource( 2 )
+
+[node name="Pointer" type="KinematicBody2D" parent="." groups=["point"]]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pointer"]
+shape = SubResource( 3 )
+
+[connection signal="item_selected" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer/MicButton" to="." method="_on_MicButton_item_selected"]
+[connection signal="toggled" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/NormalKey" to="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/NormalKey" method="_on_toggle"]
+[connection signal="toggled" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/HappyKey" to="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/HappyKey" method="_on_toggle"]
+[connection signal="toggled" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/ExcitedKey" to="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/ExcitedKey" method="_on_toggle"]
+[connection signal="toggled" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/AngryKey" to="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/AngryKey" method="_on_toggle"]
+[connection signal="pressed" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/LoadTuber" to="." method="_on_LoadTuber_pressed"]
+[connection signal="pressed" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/OpenMaker" to="." method="_on_OpenMaker_pressed"]
+[connection signal="pressed" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/SaveSettings" to="." method="_on_SaveSettings_pressed"]
+[connection signal="file_selected" from="UI/RootUI/LoadPNGtuber" to="." method="_on_LoadPNGtuber_file_selected"]
+[connection signal="body_entered" from="StaticBody2D" to="." method="_on_StaticBody2D_body_entered"]
+[connection signal="body_exited" from="StaticBody2D" to="." method="_on_StaticBody2D_body_exited"]
