@@ -155,10 +155,23 @@ margin_top = 278.0
 margin_right = 160.0
 margin_bottom = 282.0
 
-[node name="DeleteFrame" type="Button" parent="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="GridContainer2" type="GridContainer" parent="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 286.0
 margin_right = 160.0
 margin_bottom = 306.0
+columns = 2
+
+[node name="PausePlay" type="Button" parent="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/GridContainer2"]
+margin_right = 57.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Pause"
+
+[node name="DeleteFrame" type="Button" parent="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/GridContainer2"]
+margin_left = 61.0
+margin_right = 160.0
+margin_bottom = 20.0
 text = "Delete Frame"
 
 [node name="GridContainer" type="GridContainer" parent="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
@@ -195,11 +208,10 @@ align = 1
 margin_top = 64.0
 margin_right = 160.0
 margin_bottom = 88.0
+size_flags_horizontal = 3
 rounded = true
 allow_greater = true
 align = 1
-editable = false
-prefix = "Frame"
 
 [node name="HSeparator6" type="HSeparator" parent="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 402.0
@@ -287,7 +299,8 @@ resizable = true
 access = 2
 filters = PoolStringArray( "*.tres" )
 
-[connection signal="pressed" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/DeleteFrame" to="." method="_on_DeleteFrame_pressed"]
+[connection signal="toggled" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/GridContainer2/PausePlay" to="." method="_on_PausePlay_toggled"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/GridContainer2/DeleteFrame" to="." method="_on_DeleteFrame_pressed"]
 [connection signal="value_changed" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/GridContainer/FPSCounter" to="." method="_on_FPSCounter_value_changed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/Button9" to="." method="_on_Button9_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/Button12" to="." method="_on_Button12_pressed"]
