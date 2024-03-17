@@ -44,7 +44,8 @@ func create_empty_file(path:String) -> void:
 		"default_Look": 0,
 		"enabled_Keys": false,
 		"keys" : {"mapping": {}},
-		"avatar": ""
+		"avatar": "",
+		"pan_zoom": {"pan": Vector2(), "zoom": Vector2()}
 		}
 	ResourceSaver.save(path, temp)
 

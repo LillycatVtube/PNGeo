@@ -5,6 +5,9 @@ extends Node2D
 onready var UI = $UI
 onready var Spr = $CharacterRoot/RootSprite
 onready var Audio = $AudioStreamPlayer
+onready var PNGtuber = $PNGtuberMaker
+onready var Detect = $StaticBody2D
+onready var BG = $BG
 export (float, 0, -50) var VolumeThreshold:float = -25 
 export (SpriteFrames) var SpriteOverride
 export (float) var MIN_DB:float = 60
@@ -15,6 +18,29 @@ var SoundVolume
 var avatar_path:String
 var selected_mic:int
 onready var spectrum = AudioServer.get_bus_effect_instance(0,0)
+export (bool) var PanZooming:bool
+var ZoomSpeed:float =0.05
+var MinZoom:float = 0.001
+var MaxZoom:float = 2.0
+var DragSensitivity:float = 1.0
+
+
+
+func _input(event):
+	if PanZooming:
+		if event is InputEventMouseMotion && Input.is_mouse_button_pressed(BUTTON_RIGHT):
+			$Camera2D.position -= event.relative * DragSensitivity / ZoomSpeed / $Camera2D.zoom
+			
+		if event is InputEventMouseButton:
+			if event.button_index == BUTTON_WHEEL_UP:
+				$Camera2D.zoom += Vector2(ZoomSpeed,ZoomSpeed) * $Camera2D.zoom
+			if event.button_index == BUTTON_WHEEL_DOWN:
+				$Camera2D.zoom -= Vector2(ZoomSpeed,ZoomSpeed) * $Camera2D.zoom
+			if event.button_index == BUTTON_MIDDLE:
+				$Camera2D.zoom = Vector2(1,1)
+				$Camera2D.position = Vector2(0,0)
+			$Camera2D.zoom.x = clamp($Camera2D.zoom.x, MinZoom, MaxZoom)
+			$Camera2D.zoom.y = clamp($Camera2D.zoom.y, MinZoom, MaxZoom)
 
 
 func _ready():
@@ -25,6 +51,13 @@ func _ready():
 
 func _physics_process(_delta):
 	$Pointer.global_position = get_local_mouse_position()
+	BG.position = $Camera2D.position
+	PNGtuber.position = $Camera2D.position
+	Detect.position = $Camera2D.position
+	BG.scale = $Camera2D.zoom
+	PNGtuber.scale = $Camera2D.zoom
+	UI.scale = $Camera2D.zoom
+	Detect.scale = $Camera2D.zoom
 
 
 func _process(_delta):
@@ -37,17 +70,27 @@ func _process(_delta):
 func update_window():
 	if UI.WinTransparent.pressed:
 		get_tree().get_root().set_transparent_background(true)
-		$Node2D/ColorRect.visible = false
+		$BG/ColorRect.visible = false
 	if !UI.WinTransparent.pressed:
 		get_tree().get_root().set_transparent_background(false)
-		$Node2D/ColorRect.visible = true
-		$Node2D/ColorRect.color = UI.WinColor.color
+		$BG/ColorRect.visible = true
+		$BG/ColorRect.color = UI.WinColor.color
+	if UI.PanZoom.pressed:
+		PanZooming = true
+		$BG/Label.visible = true
+	if !UI.PanZoom.pressed:
+		PanZooming = false
+		$BG/Label.visible = false
 
 
 func update_visuals():
 	var expression:String = "normal_" 
 	if !UI.EnableKey.pressed:
 		SprExpressionState = UI.ExprButton.selected
+		UI.NormalKey.disabled = true
+		UI.AngryKey.disabled = true
+		UI.HappyKey.disabled = true
+		UI.ExcitedKey.disabled = true
 	
 	if UI.EnableKey.pressed:
 		UI.NormalKey.disabled = false
@@ -115,6 +158,7 @@ func Save_settings():
 	IO_Manager.Saves["enabled_Keys"] = UI.EnableKey.pressed
 	IO_Manager.Saves["avatar"] = avatar_path
 	IO_Manager.Saves["mic"] = selected_mic
+	IO_Manager.Saves["pan_zoom"] = {"pan": $Camera2D.position, "zoom": $Camera2D.zoom}
 	IO_Manager.save()
 
 
@@ -124,15 +168,19 @@ func reload():
 	UI.VoiceLevel.value = IO_Manager.Saves["volume"]
 	UI.ExprButton.selected = IO_Manager.Saves["default_Look"]
 	UI.EnableKey.pressed = IO_Manager.Saves["enabled_Keys"]
+	UI.MicButton.selected = IO_Manager.Saves["mic"]
+	selected_mic = IO_Manager.Saves["mic"]
+	AudioServer.capture_device = UI.MicButton.get_item_text(IO_Manager.Saves["mic"])
+	$Camera2D.zoom = IO_Manager.Saves["pan_zoom"]["zoom"]
+	$Camera2D.position = IO_Manager.Saves["pan_zoom"]["pan"]
+	
 	var f = File.new()
 	if IO_Manager.Saves["avatar"] == ""|| !f.file_exists(IO_Manager.Saves["avatar"]):
 		return
 	else:
 		avatar_path = IO_Manager.Saves["avatar"]
 		Spr.frames = load(avatar_path)
-	UI.MicButton.selected = IO_Manager.Saves["mic"]
-	selected_mic = IO_Manager.Saves["mic"]
-	AudioServer.capture_device = UI.MicButton.get_item_text(IO_Manager.Saves["mic"])
+	
 
 
 func _on_SaveSettings_pressed():
@@ -149,14 +197,14 @@ func tween_UI_forward():
 	if t:
 		t.kill()
 	t = self.create_tween()
-	t.tween_property(UI, "global_position:x", 0, 0.1).from_current().set_trans(Tween.TRANS_LINEAR)
+	t.tween_property(UI, "global_position", Vector2(0,0) + $Camera2D.position, 0.1).from_current().set_trans(Tween.TRANS_LINEAR)
 
 
 func tween_UI_backward():
 	if t:
 		t.kill()
 	t = self.create_tween()
-	t.tween_property(UI, "global_position:x", -206, 0.1).from_current().set_trans(Tween.TRANS_LINEAR)
+	t.tween_property(UI, "global_position", Vector2(-1000,0) + $Camera2D.position + $Camera2D.zoom, 0.1).from_current().set_trans(Tween.TRANS_LINEAR)
 
 
 func _on_StaticBody2D_body_entered(body):
