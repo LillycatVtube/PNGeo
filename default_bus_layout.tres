@@ -4,5 +4,6 @@
 resource_name = "SpectrumAnalyzer"
 
 [resource]
+bus/0/mute = true
 bus/0/effect/0/effect = SubResource( 2 )
 bus/0/effect/0/enabled = true

@@ -8,6 +8,8 @@ onready var Audio = $AudioStreamPlayer
 onready var PNGtuber = $PNGtuberMaker
 onready var Detect = $StaticBody2D
 onready var BG = $BG
+onready var Decor = $CharacterRoot/DecorSprite
+onready var DecorMaker = $DecorMaker
 export (float, 0, -50) var VolumeThreshold:float = -25 
 export (SpriteFrames) var SpriteOverride
 export (float) var MIN_DB:float = 60
@@ -41,6 +43,10 @@ func _input(event):
 				$Camera2D.position = Vector2(0,0)
 			$Camera2D.zoom.x = clamp($Camera2D.zoom.x, MinZoom, MaxZoom)
 			$Camera2D.zoom.y = clamp($Camera2D.zoom.y, MinZoom, MaxZoom)
+	
+	if DecorMaker.MovingDecor:
+		if event is InputEventMouseMotion && Input.is_mouse_button_pressed(BUTTON_RIGHT):
+			Decor.position += event.relative * DragSensitivity / Vector2(1,1)
 
 
 func _ready():
@@ -58,6 +64,8 @@ func _physics_process(_delta):
 	PNGtuber.scale = $Camera2D.zoom
 	UI.scale = $Camera2D.zoom
 	Detect.scale = $Camera2D.zoom
+	DecorMaker.scale = $Camera2D.zoom
+	DecorMaker.position = $Camera2D.position
 
 
 func _process(_delta):
@@ -76,6 +84,7 @@ func update_window():
 		$BG/ColorRect.visible = true
 		$BG/ColorRect.color = UI.WinColor.color
 	if UI.PanZoom.pressed:
+		DecorMaker.MovingDecor = false
 		PanZooming = true
 		$BG/Label.visible = true
 	if !UI.PanZoom.pressed:
@@ -118,6 +127,13 @@ func update_visuals():
 		Spr.play(expression + "speak")
 	if !Talking:
 		Spr.play(expression + "silent")
+	
+	
+	#--Decor--
+	if UI.EnableDecor.pressed:
+		Decor.visible = true
+	if !UI.EnableDecor.pressed:
+		Decor.visible = false
 
 
 func update_audio():
@@ -159,6 +175,8 @@ func Save_settings():
 	IO_Manager.Saves["avatar"] = avatar_path
 	IO_Manager.Saves["mic"] = selected_mic
 	IO_Manager.Saves["pan_zoom"] = {"pan": $Camera2D.position, "zoom": $Camera2D.zoom}
+	IO_Manager.Saves["decor"]["pos"] = Decor.position
+	IO_Manager.Saves["decor"]["enabled"] = Decor.visible
 	IO_Manager.save()
 
 
@@ -173,11 +191,17 @@ func reload():
 	AudioServer.capture_device = UI.MicButton.get_item_text(IO_Manager.Saves["mic"])
 	$Camera2D.zoom = IO_Manager.Saves["pan_zoom"]["zoom"]
 	$Camera2D.position = IO_Manager.Saves["pan_zoom"]["pan"]
-	
+	Decor.position = IO_Manager.Saves["decor"]["pos"]
+	UI.EnableDecor.pressed = IO_Manager.Saves["decor"]["enabled"]
 	var f = File.new()
-	if IO_Manager.Saves["avatar"] == ""|| !f.file_exists(IO_Manager.Saves["avatar"]):
-		return
-	else:
+	if f.file_exists(IO_Manager.Saves["decor"]["spr"]):
+		var image = Image.new()
+		image.load(IO_Manager.Saves["decor"]["spr"])
+	
+		var image_tex = ImageTexture.new()
+		image_tex.create_from_image(image)
+		Decor.texture = image_tex
+	if f.file_exists(IO_Manager.Saves["avatar"]):
 		avatar_path = IO_Manager.Saves["avatar"]
 		Spr.frames = load(avatar_path)
 	
@@ -215,3 +239,9 @@ func _on_StaticBody2D_body_entered(body):
 func _on_StaticBody2D_body_exited(body):
 	if body.is_in_group("point"):
 		tween_UI_backward()
+
+
+func _on_OpenDecorMaker_pressed():
+	UI.PanZoom.pressed = false
+	
+	DecorMaker.visible = true
