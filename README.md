@@ -23,14 +23,15 @@ Make a PNGtuber software that's free and runs nativly on Linux without the use o
 - Saving and loading
 - Audio Device selection
 - Expression Keybinding
+- PNGtuber repositioning
+
 
 # WIP/ In-Development Features
-- PNGtuber repositioning
+- Decor options/Decor maker
 - Animation support
 
 
 # Planned Features
-- Decor options/Decor maker
 - PNGtuber reacting to voice levels (such as yelling)
 
 # Screenshots
