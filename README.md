@@ -25,17 +25,21 @@ Make a PNGtuber software that's free and runs nativly on Linux without the use o
 - Expression Keybinding
 - PNGtuber repositioning
 - Decor options/Decor maker
-
-# WIP/ In-Development Features
 - Animation support
 
 
+# WIP/ In-Development Features
+- N/A
+
+
 # Planned Features
-- PNGtuber reacting to voice levels (such as yelling)
+- N/A
 
 # Screenshots
-![image](https://github.com/LillycatVtube/PNGeo/assets/157961265/ffc9feea-f05d-42f1-895c-a673f3a739b6)
-![image](https://github.com/LillycatVtube/PNGeo/assets/157961265/400558e7-4f00-40b4-acde-1f375abadf0e)
+![image](https://github.com/LillycatVtube/PNGeo/assets/157961265/48925644-26dc-4f9d-9c71-41fc3dc0a7f4)
+![image](https://github.com/LillycatVtube/PNGeo/assets/157961265/00f3f5ec-8f5d-4b03-ab08-825a52e17abe)
+![image](https://github.com/LillycatVtube/PNGeo/assets/157961265/d2b81e63-8ea6-459c-a34f-2649ebaf349c)
+
 
 # Contributing
  
