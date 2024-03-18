@@ -348,7 +348,7 @@ text = "Open PNGtuber Maker"
 margin_top = 48.0
 margin_right = 192.0
 margin_bottom = 68.0
-text = "Open Decore Maker"
+text = "Open Decor Maker"
 
 [node name="SaveSettings" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3"]
 margin_top = 72.0

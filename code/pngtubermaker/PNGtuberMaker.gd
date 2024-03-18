@@ -79,9 +79,11 @@ func _process(_delta):
 func _on_OpenSprPath_file_selected(path):
 	var image = Image.new()
 	image.load(path)
-	
+	image.resize(image.get_width(), image.get_height(),Image.INTERPOLATE_NEAREST)
+	image.fix_alpha_edges()
 	var image_tex = ImageTexture.new()
-	image_tex.create_from_image(image)
+	image_tex.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	image_tex.create_from_image(image, 2)
 	
 	if SelectedButtons == 0:
 		PrevSpr.frames.add_frame("normal_silent", image_tex)

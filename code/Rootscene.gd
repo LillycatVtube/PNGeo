@@ -31,18 +31,18 @@ var DragSensitivity:float = 1.0
 func _input(event):
 	if PanZooming:
 		if event is InputEventMouseMotion && Input.is_mouse_button_pressed(BUTTON_RIGHT):
-			$Camera2D.position -= event.relative * DragSensitivity / ZoomSpeed / $Camera2D.zoom
+			Spr.position += event.relative * DragSensitivity
 			
 		if event is InputEventMouseButton:
 			if event.button_index == BUTTON_WHEEL_UP:
-				$Camera2D.zoom += Vector2(ZoomSpeed,ZoomSpeed) * $Camera2D.zoom
+				Spr.scale += Vector2(ZoomSpeed,ZoomSpeed) * Spr.scale
 			if event.button_index == BUTTON_WHEEL_DOWN:
-				$Camera2D.zoom -= Vector2(ZoomSpeed,ZoomSpeed) * $Camera2D.zoom
+				Spr.scale -= Vector2(ZoomSpeed,ZoomSpeed) * Spr.scale
 			if event.button_index == BUTTON_MIDDLE:
-				$Camera2D.zoom = Vector2(1,1)
-				$Camera2D.position = Vector2(0,0)
-			$Camera2D.zoom.x = clamp($Camera2D.zoom.x, MinZoom, MaxZoom)
-			$Camera2D.zoom.y = clamp($Camera2D.zoom.y, MinZoom, MaxZoom)
+				Spr.scale = Vector2(1,1)
+				Spr.position = Vector2(100,100)
+			Spr.scale.x = clamp(Spr.scale.x, MinZoom, MaxZoom)
+			Spr.scale.y = clamp(Spr.scale.y, MinZoom, MaxZoom)
 	
 	if DecorMaker.MovingDecor:
 		if event is InputEventMouseMotion && Input.is_mouse_button_pressed(BUTTON_RIGHT):
@@ -174,13 +174,15 @@ func Save_settings():
 	IO_Manager.Saves["enabled_Keys"] = UI.EnableKey.pressed
 	IO_Manager.Saves["avatar"] = avatar_path
 	IO_Manager.Saves["mic"] = selected_mic
-	IO_Manager.Saves["pan_zoom"] = {"pan": $Camera2D.position, "zoom": $Camera2D.zoom}
+	IO_Manager.Saves["pan_zoom"] = {"pan": Spr.position, "zoom": Spr.scale}
 	IO_Manager.Saves["decor"]["pos"] = Decor.position
 	IO_Manager.Saves["decor"]["enabled"] = Decor.visible
 	IO_Manager.save()
 
 
 func reload():
+	$Camera2D.zoom = Vector2(1,1)
+	$Camera2D.position = Vector2(0,0)
 	UI.WinTransparent.pressed = IO_Manager.Saves["trans"]
 	UI.WinColor.color = IO_Manager.Saves["window_Color"]
 	UI.VoiceLevel.value = IO_Manager.Saves["volume"]
@@ -189,17 +191,19 @@ func reload():
 	UI.MicButton.selected = IO_Manager.Saves["mic"]
 	selected_mic = IO_Manager.Saves["mic"]
 	AudioServer.capture_device = UI.MicButton.get_item_text(IO_Manager.Saves["mic"])
-	$Camera2D.zoom = IO_Manager.Saves["pan_zoom"]["zoom"]
-	$Camera2D.position = IO_Manager.Saves["pan_zoom"]["pan"]
+	Spr.scale= IO_Manager.Saves["pan_zoom"]["zoom"]
+	Spr.position = IO_Manager.Saves["pan_zoom"]["pan"]
 	Decor.position = IO_Manager.Saves["decor"]["pos"]
 	UI.EnableDecor.pressed = IO_Manager.Saves["decor"]["enabled"]
 	var f = File.new()
 	if f.file_exists(IO_Manager.Saves["decor"]["spr"]):
 		var image = Image.new()
 		image.load(IO_Manager.Saves["decor"]["spr"])
-	
+		image.resize(image.get_width(), image.get_height(),Image.INTERPOLATE_NEAREST)
+		image.fix_alpha_edges()
 		var image_tex = ImageTexture.new()
-		image_tex.create_from_image(image)
+		image_tex.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+		image_tex.create_from_image(image, 2)
 		Decor.texture = image_tex
 	if f.file_exists(IO_Manager.Saves["avatar"]):
 		avatar_path = IO_Manager.Saves["avatar"]

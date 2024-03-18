@@ -19,9 +19,12 @@ func _on_FileDialog_file_selected(path):
 	IO_Manager.Saves["decor"]["spr"] = path
 	var image = Image.new()
 	image.load(path)
-	
+	image.resize(image.get_width(), image.get_height(),Image.INTERPOLATE_NEAREST)
+	image.fix_alpha_edges()
 	var image_tex = ImageTexture.new()
-	image_tex.create_from_image(image)
+	image_tex.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	image_tex.create_from_image(image, 2)
+	
 	get_tree().get_nodes_in_group("root")[0].Decor.texture = image_tex
 
 
