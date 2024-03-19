@@ -289,6 +289,7 @@ resizable = true
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png", "*.jpeg", "*.jpg" )
+show_hidden_files = true
 
 [node name="SaveSprPath" type="FileDialog" parent="."]
 margin_left = 295.0
@@ -298,6 +299,7 @@ margin_bottom = 484.0
 resizable = true
 access = 2
 filters = PoolStringArray( "*.tres" )
+show_hidden_files = true
 
 [connection signal="toggled" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/GridContainer2/PausePlay" to="." method="_on_PausePlay_toggled"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/GridContainer2/DeleteFrame" to="." method="_on_DeleteFrame_pressed"]
@@ -306,4 +308,5 @@ filters = PoolStringArray( "*.tres" )
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/Button12" to="." method="_on_Button12_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/Button" to="." method="_on_Button_pressed"]
 [connection signal="file_selected" from="OpenSprPath" to="." method="_on_OpenSprPath_file_selected"]
+[connection signal="files_selected" from="OpenSprPath" to="." method="_on_OpenSprPath_files_selected"]
 [connection signal="file_selected" from="SaveSprPath" to="." method="_on_SaveSprPath_file_selected"]

@@ -182,3 +182,31 @@ func _on_PausePlay_toggled(button_pressed):
 		$Control/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/GridContainer2/PausePlay.text = "pause"
 		PrevSpr.playing = true
 		PausedAnim = false
+
+
+func _on_OpenSprPath_files_selected(paths):
+	for p in paths:
+		var image = Image.new()
+		image.load(p)
+		image.resize(image.get_width(), image.get_height(),Image.INTERPOLATE_NEAREST)
+		image.fix_alpha_edges()
+		var image_tex = ImageTexture.new()
+		image_tex.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+		image_tex.create_from_image(image, 2)
+		
+		if SelectedButtons == 0:
+			PrevSpr.frames.add_frame("normal_silent", image_tex)
+		if SelectedButtons == 1:
+			PrevSpr.frames.add_frame("happy_silent", image_tex)
+		if SelectedButtons == 2:
+			PrevSpr.frames.add_frame("excited_silent", image_tex)
+		if SelectedButtons == 3:
+			PrevSpr.frames.add_frame("angry_silent", image_tex)
+		if SelectedButtons == 4:
+			PrevSpr.frames.add_frame("normal_speak", image_tex)
+		if SelectedButtons == 5:
+			PrevSpr.frames.add_frame("happy_speak", image_tex)
+		if SelectedButtons == 6:
+			PrevSpr.frames.add_frame("excited_speak", image_tex)
+		if SelectedButtons == 7:
+			PrevSpr.frames.add_frame("angry_speak", image_tex)
