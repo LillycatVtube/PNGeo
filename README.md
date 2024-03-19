@@ -36,9 +36,10 @@ Make a PNGtuber software that's free and runs nativly on Linux without the use o
 - N/A
 
 # Screenshots
-![image](https://github.com/LillycatVtube/PNGeo/assets/157961265/48925644-26dc-4f9d-9c71-41fc3dc0a7f4)
+![Screenshot from 2024-03-19 15-08-02](https://github.com/LillycatVtube/PNGeo/assets/157961265/d2fa3360-7cfb-4913-93f8-99095720fdcf)
 ![image](https://github.com/LillycatVtube/PNGeo/assets/157961265/00f3f5ec-8f5d-4b03-ab08-825a52e17abe)
-![image](https://github.com/LillycatVtube/PNGeo/assets/157961265/d2b81e63-8ea6-459c-a34f-2649ebaf349c)
+![Screenshot from 2024-03-19 15-15-31](https://github.com/LillycatVtube/PNGeo/assets/157961265/ae69c680-9972-41d2-aee2-25fa2ca844c9)
+
 
 
 # Contributing
