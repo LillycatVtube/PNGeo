@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://code/decormaker/DecorMaker.gd" type="Script" id=1]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="DecorMaker" type="Node2D"]
 script = ExtResource( 1 )
@@ -10,39 +18,39 @@ margin_right = 1024.0
 margin_bottom = 602.0
 
 [node name="PanelContainer" type="PanelContainer" parent="Control"]
-margin_left = 743.0
-margin_top = 473.0
-margin_right = 1011.0
-margin_bottom = 569.0
+margin_left = 705.0
+margin_top = 495.0
+margin_right = 1013.0
+margin_bottom = 591.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 264.0
+margin_right = 301.0
 margin_bottom = 89.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/MarginContainer"]
-margin_right = 257.0
+margin_right = 294.0
 margin_bottom = 82.0
 
 [node name="VBoxContainer" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
-margin_right = 257.0
+margin_right = 294.0
 margin_bottom = 14.0
 text = "--Decor Maker--"
 align = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 18.0
-margin_right = 257.0
+margin_right = 294.0
 margin_bottom = 22.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 26.0
-margin_right = 257.0
+margin_right = 294.0
 margin_bottom = 46.0
 
 [node name="GridContainer" type="GridContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 47.0
+margin_right = 92.0
 margin_bottom = 20.0
 size_flags_vertical = 3
 columns = 2
@@ -52,80 +60,93 @@ margin_right = 47.0
 margin_bottom = 20.0
 text = "Close"
 
-[node name="VSeparator" type="VSeparator" parent="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Save" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/GridContainer"]
 margin_left = 51.0
-margin_right = 55.0
+margin_right = 92.0
 margin_bottom = 20.0
+text = "Save"
 
 [node name="LoadDecor" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 59.0
-margin_right = 101.0
+margin_left = 96.0
+margin_right = 138.0
 margin_bottom = 20.0
 text = "Load"
 
 [node name="Clear" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 105.0
-margin_right = 149.0
+margin_left = 142.0
+margin_right = 186.0
 margin_bottom = 20.0
 text = "Clear"
 
 [node name="Reset" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 153.0
-margin_right = 257.0
+margin_left = 190.0
+margin_right = 294.0
 margin_bottom = 20.0
 text = "Reset Position"
 
 [node name="HSeparator3" type="HSeparator" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 50.0
-margin_right = 257.0
+margin_right = 294.0
 margin_bottom = 54.0
 
 [node name="GridContainer" type="GridContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 58.0
-margin_right = 257.0
+margin_right = 294.0
 margin_bottom = 82.0
 columns = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="Label2" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 margin_top = 5.0
-margin_right = 127.0
+margin_right = 135.0
 margin_bottom = 19.0
-size_flags_horizontal = 3
-text = "Move Decor"
+text = "Animation Framerate"
 align = 1
 
-[node name="MoveDecorButton" type="CheckBox" parent="Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
-margin_left = 131.0
-margin_right = 257.0
+[node name="Framerate" type="SpinBox" parent="Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 139.0
+margin_right = 294.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="Control"]
-margin_left = 746.0
-margin_top = 37.0
-margin_right = 1000.0
-margin_bottom = 94.0
-custom_colors/font_color = Color( 0.643137, 0.643137, 0.643137, 1 )
-custom_colors/font_color_shadow = Color( 0.184314, 0.184314, 0.184314, 1 )
-custom_constants/shadow_as_outline = 2
-text = "--Move Decor is enabled--
-Controls:
-Move - Right Mouse Button"
+value = 10.0
+rounded = true
 align = 1
+suffix = "FPS"
 
 [node name="FileDialog" type="FileDialog" parent="Control"]
 margin_left = 542.0
 margin_top = 121.0
 margin_right = 1013.0
 margin_bottom = 456.0
-window_title = "Open a File"
+window_title = "Open File(s)"
 dialog_hide_on_ok = true
-mode = 0
+mode = 1
 access = 2
 filters = PoolStringArray( "*png", "*.jpg", "*.jpeg" )
+show_hidden_files = true
+
+[node name="SaveFile" type="FileDialog" parent="Control"]
+margin_left = 498.0
+margin_top = 124.0
+margin_right = 1003.0
+margin_bottom = 478.0
+window_title = "Save Decor"
+resizable = true
+dialog_hide_on_ok = true
+access = 2
+filters = PoolStringArray( "*.tres" )
+
+[node name="PrevSpr" type="AnimatedSprite" parent="."]
+position = Vector2( 441, 273 )
+frames = SubResource( 1 )
+playing = true
+centered = false
 
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/GridContainer/CloseWindow" to="." method="_on_CloseWindow_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/GridContainer/Save" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/LoadDecor" to="." method="_on_LoadDecor_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Clear" to="." method="_on_Clear_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Reset" to="." method="_on_Reset_pressed"]
+[connection signal="value_changed" from="Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer/Framerate" to="." method="_on_Framerate_value_changed"]
 [connection signal="file_selected" from="Control/FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="files_selected" from="Control/FileDialog" to="." method="_on_FileDialog_files_selected"]
+[connection signal="file_selected" from="Control/SaveFile" to="." method="_on_SaveFile_file_selected"]

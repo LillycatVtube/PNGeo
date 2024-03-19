@@ -14,3 +14,4 @@ onready var HappyKey = $RootUI/PanelContainer/MarginContainer/VBoxContainer/Grid
 onready var ExcitedKey =$RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/ExcitedKey
 onready var AngryKey = $RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/AngryKey
 onready var EnableDecor = $RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/EnableDecorButton
+onready var MoveDecor = $RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/MoveDecor

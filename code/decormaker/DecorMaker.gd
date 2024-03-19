@@ -1,19 +1,8 @@
 extends Node2D
 
 
+onready var PrevSpr = $PrevSpr
 
-export (bool) var MovingDecor:bool = false
-
-
-func _process(_delta):
-	if MovingDecor:
-		$Control/Label.visible = true
-	if !MovingDecor:
-		$Control/Label.visible = false
-	if $Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer/MoveDecorButton.pressed:
-		MovingDecor = true
-	if !$Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer/MoveDecorButton.pressed:
-		MovingDecor = false
 
 func _on_FileDialog_file_selected(path):
 	IO_Manager.Saves["decor"]["spr"] = path
@@ -25,13 +14,13 @@ func _on_FileDialog_file_selected(path):
 	image_tex.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
 	image_tex.create_from_image(image, 2)
 	
-	get_tree().get_nodes_in_group("root")[0].Decor.texture = image_tex
+	PrevSpr.frames.add_frame("default", image_tex)
 
 
 
 
 func _on_Clear_pressed():
-	get_tree().get_nodes_in_group("root")[0].Decor.texture = null
+	PrevSpr.frames.clear("default")
 
 
 func _on_LoadDecor_pressed():
@@ -39,10 +28,33 @@ func _on_LoadDecor_pressed():
 
 
 func _on_Reset_pressed():
-	get_tree().get_nodes_in_group("root")[0].Decor.position = Vector2(100,100)
+	PrevSpr.position = Vector2(100,100)
 
 
 func _on_CloseWindow_pressed():
-	MovingDecor = false
-	$Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer/MoveDecorButton.pressed = false
 	self.visible = false
+
+
+func _on_FileDialog_files_selected(paths):
+	for p in paths:
+		var image = Image.new()
+		image.load(p)
+		image.resize(image.get_width(), image.get_height(),Image.INTERPOLATE_NEAREST)
+		image.fix_alpha_edges()
+		var image_tex = ImageTexture.new()
+		image_tex.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+		image_tex.create_from_image(image, 2)
+		
+		PrevSpr.frames.add_frame("default",image_tex)
+
+
+func _on_Save_pressed():
+	$Control/SaveFile.popup()
+
+
+func _on_SaveFile_file_selected(path):
+	ResourceSaver.save(path, PrevSpr.frames)
+
+
+func _on_Framerate_value_changed(value):
+	PrevSpr.frames.set_animation_speed("default", value)

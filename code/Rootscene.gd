@@ -18,6 +18,7 @@ export (int, "normal, happy, excited, angry") var SprExpressionState:int = 0
 export (bool) var Talking:bool = false
 var SoundVolume
 var avatar_path:String
+var decor_path:String
 var selected_mic:int
 onready var spectrum = AudioServer.get_bus_effect_instance(0,0)
 export (bool) var PanZooming:bool
@@ -44,7 +45,7 @@ func _input(event):
 			Spr.scale.x = clamp(Spr.scale.x, MinZoom, MaxZoom)
 			Spr.scale.y = clamp(Spr.scale.y, MinZoom, MaxZoom)
 	
-	if DecorMaker.MovingDecor:
+	if UI.MoveDecor.pressed:
 		if event is InputEventMouseMotion && Input.is_mouse_button_pressed(BUTTON_RIGHT):
 			Decor.position += event.relative * DragSensitivity / Vector2(1,1)
 
@@ -73,6 +74,7 @@ func _process(_delta):
 	update_visuals()
 	update_window()
 	update()
+	
 
 
 func update_window():
@@ -84,12 +86,20 @@ func update_window():
 		$BG/ColorRect.visible = true
 		$BG/ColorRect.color = UI.WinColor.color
 	if UI.PanZoom.pressed:
-		DecorMaker.MovingDecor = false
+		UI.MoveDecor.pressed = false
 		PanZooming = true
 		$BG/Label.visible = true
 	if !UI.PanZoom.pressed:
 		PanZooming = false
 		$BG/Label.visible = false
+	if UI.MoveDecor.pressed:
+		UI.PanZoom.pressed = false
+		$BG/Label2.visible = true
+	if !UI.MoveDecor.pressed:
+		$BG/Label2.visible = false
+	
+	if !OS.is_window_focused():
+		tween_UI_backward()
 
 
 func update_visuals():
@@ -177,6 +187,7 @@ func Save_settings():
 	IO_Manager.Saves["pan_zoom"] = {"pan": Spr.position, "zoom": Spr.scale}
 	IO_Manager.Saves["decor"]["pos"] = Decor.position
 	IO_Manager.Saves["decor"]["enabled"] = Decor.visible
+	IO_Manager.Saves["decor"]["spr"] = decor_path
 	IO_Manager.save()
 
 
@@ -197,14 +208,10 @@ func reload():
 	UI.EnableDecor.pressed = IO_Manager.Saves["decor"]["enabled"]
 	var f = File.new()
 	if f.file_exists(IO_Manager.Saves["decor"]["spr"]):
-		var image = Image.new()
-		image.load(IO_Manager.Saves["decor"]["spr"])
-		image.resize(image.get_width(), image.get_height(),Image.INTERPOLATE_NEAREST)
-		image.fix_alpha_edges()
-		var image_tex = ImageTexture.new()
-		image_tex.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-		image_tex.create_from_image(image, 2)
-		Decor.texture = image_tex
+		var e = load(IO_Manager.Saves["decor"]["spr"])
+		decor_path = IO_Manager.Saves["decor"]["spr"]
+		Decor.frames = e
+		Decor.play("default")
 	if f.file_exists(IO_Manager.Saves["avatar"]):
 		avatar_path = IO_Manager.Saves["avatar"]
 		Spr.frames = load(avatar_path)
@@ -224,8 +231,12 @@ var t
 func tween_UI_forward():
 	if t:
 		t.kill()
-	t = self.create_tween()
-	t.tween_property(UI, "global_position", Vector2(0,0) + $Camera2D.position, 0.1).from_current().set_trans(Tween.TRANS_LINEAR)
+	if !OS.is_window_focused():
+		tween_UI_backward()
+	if OS.is_window_focused():
+		
+		t = self.create_tween()
+		t.tween_property(UI, "global_position", Vector2(0,0) + $Camera2D.position, 0.1).from_current().set_trans(Tween.TRANS_LINEAR)
 
 
 func tween_UI_backward():
@@ -236,7 +247,7 @@ func tween_UI_backward():
 
 
 func _on_StaticBody2D_body_entered(body):
-	if body.is_in_group("point"):
+	if body.is_in_group("point") && OS.is_window_focused():
 		tween_UI_forward()
 
 
@@ -249,3 +260,17 @@ func _on_OpenDecorMaker_pressed():
 	UI.PanZoom.pressed = false
 	
 	DecorMaker.visible = true
+
+
+func _on_LoadDecor_file_selected(path):
+	Decor.frames = load(path)
+	decor_path = path
+	Decor.play("default")
+
+
+func _on_LoadDecor_pressed():
+	$UI/RootUI/LoadDecor.popup()
+
+
+func _on_OpenSaveFolder_pressed():
+	OS.shell_open(IO_Manager.SaveFileLocation)
