@@ -29,7 +29,7 @@ Make a PNGtuber software that's free and runs nativly on Linux without the use o
 
 
 # WIP/ In-Development Features
-- N/A
+- "Advanced Mode"
 
 
 # Planned Features
