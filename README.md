@@ -7,7 +7,7 @@ PNGeo is a Free, Open source, and in development PNGtuber software for Linux pow
 
 # About PNGeo
 
-PNGeo was initially made in ~6 hours by the Lead dev Lillycat(Vtube) with one goal in mind: 
+PNGeo was initially made in ~6 hours by the Lead dev Winds of Spring Lilly with one goal in mind: 
 
 Make a PNGtuber software that's free and runs nativly on Linux without the use of Bottles/Wine.
 
@@ -44,11 +44,11 @@ Make a PNGtuber software that's free and runs nativly on Linux without the use o
 
 # Contributing
  
- If you want to contribute, you can contact me (LillycatVtube) through my Discord (@LillycatVtube). I'm always all ears for help!
+ If you want to contribute, you can contact us (Winds of Spring System) through our Discord (@windsofspringsystem). I'm always all ears for help!
 
 # Credits
 PNGeo is made by:
-- Lillycat(Vtube)
+- Winds of Spring System
 
 Powered by: 
 - The Godot game engine.
