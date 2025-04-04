@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://code/root/CharacterRoot.gd" type="Script" id=1]
 [ext_resource path="res://assets/default_res/lillycat0.tres" type="SpriteFrames" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://scenes/PNGtuberMaker.tscn" type="PackedScene" id=5]
 [ext_resource path="res://code/root/ExpressionKey.gd" type="Script" id=6]
 [ext_resource path="res://scenes/DecorMaker.tscn" type="PackedScene" id=7]
+[ext_resource path="res://code/root/UI_Advanced.gd" type="Script" id=8]
+[ext_resource path="res://code/root/EventProcesser.gd" type="Script" id=9]
 
 [sub_resource type="AudioStreamMicrophone" id=1]
 
@@ -32,22 +34,19 @@ autoplay = true
 mix_target = 2
 
 [node name="BG" type="Node2D" parent="."]
-__meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
-}
+z_index = -101
 
 [node name="ColorRect" type="ColorRect" parent="BG"]
-margin_right = 1549.0
-margin_bottom = 832.0
+margin_right = 1919.0
+margin_bottom = 1486.0
 color = Color( 0, 1, 0, 1 )
 
 [node name="Label" type="Label" parent="BG"]
 visible = false
-margin_left = 695.0
-margin_top = 9.0
-margin_right = 1010.0
-margin_bottom = 180.0
+margin_left = 359.0
+margin_top = 13.0
+margin_right = 674.0
+margin_bottom = 184.0
 custom_colors/font_color = Color( 0.545098, 0.545098, 0.545098, 1 )
 custom_colors/font_outline_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
@@ -63,10 +62,10 @@ align = 1
 
 [node name="Label2" type="Label" parent="BG"]
 visible = false
-margin_left = 695.0
-margin_top = 9.0
-margin_right = 1010.0
-margin_bottom = 180.0
+margin_left = 356.0
+margin_top = 12.0
+margin_right = 671.0
+margin_bottom = 183.0
 custom_colors/font_color = Color( 0.545098, 0.545098, 0.545098, 1 )
 custom_colors/font_outline_modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
@@ -90,9 +89,9 @@ __meta__ = {
 position = Vector2( 391, 220 )
 frames = ExtResource( 2 )
 animation = "normal_silent"
-centered = false
 
 [node name="DecorSprite" type="AnimatedSprite" parent="CharacterRoot"]
+z_index = -1
 frames = SubResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -119,11 +118,11 @@ mouse_filter = 2
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 199.0
-margin_bottom = 592.0
+margin_bottom = 597.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/RootUI/PanelContainer/MarginContainer"]
 margin_right = 192.0
-margin_bottom = 585.0
+margin_bottom = 590.0
 
 [node name="Label" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
 margin_right = 192.0
@@ -374,7 +373,7 @@ margin_bottom = 418.0
 [node name="GridContainer3" type="VBoxContainer" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 422.0
 margin_right = 192.0
-margin_bottom = 562.0
+margin_bottom = 590.0
 
 [node name="LoadTuber" type="Button" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3"]
 margin_right = 192.0
@@ -411,6 +410,22 @@ margin_right = 192.0
 margin_bottom = 140.0
 text = "Open Save Folder"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3"]
+margin_top = 144.0
+margin_right = 192.0
+margin_bottom = 168.0
+
+[node name="Label" type="Label" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/HBoxContainer"]
+margin_top = 5.0
+margin_right = 102.0
+margin_bottom = 19.0
+text = "Advanced Mode"
+
+[node name="AdvancedModeButton" type="CheckBox" parent="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/HBoxContainer"]
+margin_left = 106.0
+margin_right = 130.0
+margin_bottom = 24.0
+
 [node name="LoadPNGtuber" type="FileDialog" parent="UI/RootUI"]
 margin_left = 276.0
 margin_top = 79.0
@@ -433,6 +448,204 @@ mode = 0
 access = 2
 filters = PoolStringArray( "*.tres" )
 show_hidden_files = true
+
+[node name="UI_Advanced" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Control" type="Control" parent="UI_Advanced"]
+margin_right = 1240.0
+margin_bottom = 601.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_clip_content = true
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI_Advanced/Control"]
+margin_left = 806.0
+margin_right = 1022.0
+margin_bottom = 600.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_clip_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UI_Advanced/Control/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 209.0
+margin_bottom = 593.0
+rect_clip_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI_Advanced/Control/PanelContainer/MarginContainer"]
+margin_right = 202.0
+margin_bottom = 586.0
+rect_clip_content = true
+
+[node name="Label" type="Label" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_right = 202.0
+margin_bottom = 14.0
+text = "--Advanced Mode Menu--"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 202.0
+margin_bottom = 22.0
+
+[node name="GridContainer" type="GridContainer" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 26.0
+margin_right = 202.0
+margin_bottom = 78.0
+columns = 2
+
+[node name="Label" type="Label" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 5.0
+margin_right = 97.0
+margin_bottom = 19.0
+text = "Enable Blinking"
+
+[node name="BlinkCheckbox" type="CheckBox" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 101.0
+margin_right = 125.0
+margin_bottom = 24.0
+focus_mode = 0
+
+[node name="Label2" type="Label" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 33.0
+margin_right = 97.0
+margin_bottom = 47.0
+text = "Always On Top"
+
+[node name="AlwaysOnTopButton" type="CheckBox" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+margin_left = 101.0
+margin_top = 28.0
+margin_right = 125.0
+margin_bottom = 52.0
+
+[node name="HSeparator2" type="HSeparator" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 82.0
+margin_right = 202.0
+margin_bottom = 86.0
+
+[node name="Label2" type="Label" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 90.0
+margin_right = 202.0
+margin_bottom = 104.0
+text = "--Layers--"
+align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 108.0
+margin_right = 202.0
+margin_bottom = 112.0
+
+[node name="PanelContainer" type="PanelContainer" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 116.0
+margin_right = 202.0
+margin_bottom = 332.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_clip_content = true
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 195.0
+margin_bottom = 209.0
+
+[node name="Label" type="Label" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+margin_right = 188.0
+margin_bottom = 14.0
+text = "Add..."
+align = 1
+
+[node name="GridContainer" type="GridContainer" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 188.0
+margin_bottom = 38.0
+columns = 3
+
+[node name="AddSpr" type="Button" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/GridContainer"]
+margin_right = 49.0
+margin_bottom = 20.0
+text = "Sprite"
+
+[node name="AddAnim" type="Button" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/GridContainer"]
+margin_left = 53.0
+margin_right = 131.0
+margin_bottom = 20.0
+text = "Animation"
+
+[node name="AddEvent" type="Button" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/GridContainer"]
+margin_left = 135.0
+margin_right = 182.0
+margin_bottom = 20.0
+disabled = true
+text = "Event"
+
+[node name="HSeparator" type="HSeparator" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 42.0
+margin_right = 188.0
+margin_bottom = 46.0
+
+[node name="LayerList" type="Tree" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 50.0
+margin_right = 188.0
+margin_bottom = 202.0
+size_flags_vertical = 3
+allow_reselect = true
+allow_rmb_select = true
+drop_mode_flags = 1
+
+[node name="HSeparator4" type="HSeparator" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 336.0
+margin_right = 202.0
+margin_bottom = 340.0
+
+[node name="Label3" type="Label" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 344.0
+margin_right = 202.0
+margin_bottom = 358.0
+text = "--Events--"
+align = 1
+
+[node name="HSeparator5" type="HSeparator" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 362.0
+margin_right = 202.0
+margin_bottom = 366.0
+
+[node name="PanelContainer2" type="PanelContainer" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 370.0
+margin_right = 202.0
+margin_bottom = 586.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_clip_content = true
+size_flags_vertical = 3
+
+[node name="EventList" type="ScrollContainer" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer2"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 195.0
+margin_bottom = 209.0
+grow_horizontal = 0
+grow_vertical = 0
+follow_focus = true
+scroll_horizontal_enabled = false
+
+[node name="EventListing" type="VBoxContainer" parent="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer2/EventList"]
+margin_right = 188.0
+margin_bottom = 202.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="PNGtuberMaker" parent="." instance=ExtResource( 5 )]
 visible = false
@@ -465,6 +678,107 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pointer"]
 shape = SubResource( 3 )
 
+[node name="EventProcesser" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="helpwindow" type="WindowDialog" parent="."]
+margin_right = 636.0
+margin_bottom = 568.0
+window_title = "--Event Help--"
+resizable = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="helpwindow"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HelpText" type="RichTextLabel" parent="helpwindow/VBoxContainer"]
+margin_right = 636.0
+margin_bottom = 544.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[center]Welcome to the Event help tab!
+
+--What is An \"Event\"?--- 
+An event is a small piece of 'micro-code' that allows for manipulation of Sprites, Animations, and PNGeo as a whole.
+
+---How do I use Events?---
+Events are coded in GDScript (The Godot engines own scripting language.)
+The topic of GDScript is long so if you don't know how to code in GDScript you can learn the basics[color=#3383de]
+[url=https://docs.godotengine.org/en/3.5/getting_started/introduction/index.html]Here[/url][/color]
+
+There is some limitations however... 
+You CAN'T:
+- Make Conditional statements (like 'if' or 'in').
+- Create or Remove Nodes.
+- Access Nodes that are not in the scene.
+
+---Examples---
+- Accessing the Root Sprite, and rotate it 90 degrees:
+\"[color=#3bffdb]get_parent.Spr.rotate(deg2rad(90))[/color]\"
+
+- Accessing the Decor Sprite, and rotate it 90 degrees:
+\"[color=#3bffdb]get_parent.Decor.rotate(deg2rad(90))[/color]\"
+
+- Accessing a custom Layer Sprite/Anim, and rotate it 90 degrees:
+\"[color=#3bffdb]get_parent.CharRoot.get_child(\"index of anim/sprite\").rotate(deg2rad(90))[/color]\"
+
+---Notes---
+Events should idealy be made one event per action. 
+
+[/center]---Node Tree--- (by default):
+-Rootscene (Shortcuts: Spr(RootSprite), Decor(DecorSprite), CharRoot(the parent sprite container)
+--CharRoot (every added sprite/anim added by the Layer system is added below this node.)
+---RootSprite (index 0)
+---DecorSprite (index 1)"
+text = "Welcome to the Event help tab!
+
+--What is An \"Event\"?--- 
+An event is a small piece of 'micro-code' that allows for manipulation of Sprites, Animations, and PNGeo as a whole.
+
+---How do I use Events?---
+Events are coded in GDScript (The Godot engines own scripting language.)
+The topic of GDScript is long so if you don't know how to code in GDScript you can learn the basics
+Here
+
+There is some limitations however... 
+You CAN'T:
+- Make Conditional statements (like 'if' or 'in').
+- Create or Remove Nodes.
+- Access Nodes that are not in the scene.
+
+---Examples---
+- Accessing the Root Sprite, and rotate it 90 degrees:
+\"get_parent.Spr.rotate(deg2rad(90))\"
+
+- Accessing the Decor Sprite, and rotate it 90 degrees:
+\"get_parent.Decor.rotate(deg2rad(90))\"
+
+- Accessing a custom Layer Sprite/Anim, and rotate it 90 degrees:
+\"get_parent.CharRoot.get_child(\"index of anim/sprite\").rotate(deg2rad(90))\"
+
+---Notes---
+Events should idealy be made one event per action. 
+
+---Node Tree--- (by default):
+-Rootscene (Shortcuts: Spr(RootSprite), Decor(DecorSprite), CharRoot(the parent sprite container)
+--CharRoot (every added sprite/anim added by the Layer system is added below this node.)
+---RootSprite (index 0)
+---DecorSprite (index 1)"
+
+[node name="CenterContainer" type="CenterContainer" parent="helpwindow/VBoxContainer"]
+margin_top = 548.0
+margin_right = 636.0
+margin_bottom = 568.0
+
+[node name="HelpClose" type="Button" parent="helpwindow/VBoxContainer/CenterContainer"]
+margin_left = 283.0
+margin_right = 352.0
+margin_bottom = 20.0
+text = "Exit Help"
+
+[node name="EventContainer" type="Node" parent="."]
+
 [connection signal="item_selected" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer/MicButton" to="." method="_on_MicButton_item_selected"]
 [connection signal="toggled" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/NormalKey" to="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/NormalKey" method="_on_toggle"]
 [connection signal="toggled" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/HappyKey" to="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer2/HappyKey" method="_on_toggle"]
@@ -476,7 +790,17 @@ shape = SubResource( 3 )
 [connection signal="pressed" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/OpenDecorMaker" to="." method="_on_OpenDecorMaker_pressed"]
 [connection signal="pressed" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/SaveSettings" to="." method="_on_SaveSettings_pressed"]
 [connection signal="pressed" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/OpenSaveFolder" to="." method="_on_OpenSaveFolder_pressed"]
+[connection signal="toggled" from="UI/RootUI/PanelContainer/MarginContainer/VBoxContainer/GridContainer3/HBoxContainer/AdvancedModeButton" to="." method="_on_AdvancedModeButton_toggled"]
 [connection signal="file_selected" from="UI/RootUI/LoadPNGtuber" to="." method="_on_LoadPNGtuber_file_selected"]
 [connection signal="file_selected" from="UI/RootUI/LoadDecor" to="." method="_on_LoadDecor_file_selected"]
+[connection signal="toggled" from="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer/BlinkCheckbox" to="." method="_on_BlinkCheckbox_toggled"]
+[connection signal="toggled" from="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/GridContainer/AlwaysOnTopButton" to="." method="_on_AlwaysOnTopButton_toggled"]
+[connection signal="pressed" from="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/GridContainer/AddSpr" to="." method="_on_AddSpr_pressed"]
+[connection signal="pressed" from="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/GridContainer/AddAnim" to="." method="_on_AddAnim_pressed"]
+[connection signal="pressed" from="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/GridContainer/AddEvent" to="." method="_on_AddEvent_pressed"]
+[connection signal="cell_selected" from="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/LayerList" to="." method="_on_LayerList_cell_selected"]
+[connection signal="column_title_pressed" from="UI_Advanced/Control/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/LayerList" to="." method="_on_LayerList_column_title_pressed"]
 [connection signal="body_entered" from="StaticBody2D" to="." method="_on_StaticBody2D_body_entered"]
 [connection signal="body_exited" from="StaticBody2D" to="." method="_on_StaticBody2D_body_exited"]
+[connection signal="meta_clicked" from="helpwindow/VBoxContainer/HelpText" to="." method="_on_HelpText_meta_clicked"]
+[connection signal="pressed" from="helpwindow/VBoxContainer/CenterContainer/HelpClose" to="." method="_on_HelpClose_pressed"]

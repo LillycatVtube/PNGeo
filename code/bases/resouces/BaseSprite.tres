@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://code/bases/BaseAdvNode.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/ui/icons/ui_icon_spritenode_1.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+Details = {
+"data": {
+"pos": Vector2( 100, 100 ),
+"sprite_path": "",
+"z_index": 1
+},
+"icon": ExtResource( 2 ),
+"name": "Sprite",
+"type": 0
+}

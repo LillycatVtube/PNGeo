@@ -3,14 +3,15 @@ extends Node
 
 var SaveFileLocation:String = OS.get_user_data_dir()
 var Saves:Dictionary = {}
-
+var AdvSaves:Dictionary = {}
 var SavePth:String = ""
 
 
 func get_pth() -> Dictionary:
 	return{
 		"SaveFolder": SaveFileLocation, 
-		"SavePath": SaveFileLocation + "/Saves.tres"
+		"SavePath": SaveFileLocation + "/Saves.tres",
+		"AdvSavePath": SaveFileLocation + "/AdvSaves.tres"
 	}
 
 
@@ -32,6 +33,10 @@ func initalize() -> void:
 			create_empty_file(files["SavePath"])
 		if dir.file_exists(files["SavePath"]):
 			load_save(files["SavePath"])
+		if !dir.file_exists(files["AdvSavePath"]):
+			create_empty_adv_file(files["AdvSavePath"])
+		if dir.file_exists(files["AdvSavePath"]):
+			load_adv_save(files["AdvSavePath"])
 
 
 func create_empty_file(path:String) -> void:
@@ -47,9 +52,25 @@ func create_empty_file(path:String) -> void:
 		"avatar": "",
 		"pan_zoom": {"pan": Vector2(), "zoom": Vector2(1,1)},
 		"decor": {"pos": Vector2(), "spr": "", "enabled": false},
-		"mic": int()
+		"mic": int(),
+		"advanced": false,
+		"windowsize": Vector2(1024,600),
+		"windowposition":Vector2(),
+		"ontop": false
 		}
 	ResourceSaver.save(path, temp)
+
+
+func create_empty_adv_file(path:String) -> void:
+	var temp = Resource.new()
+	temp.set("script", load("res://code/io/SaveMain.gd"))
+	temp.SaveMain = {
+		"sprites": {},
+		"events": {},
+		"anims": {}
+		}
+	ResourceSaver.save(path, temp)
+
 
 
 func load_save(path:String) -> void:
@@ -66,6 +87,20 @@ func load_save(path:String) -> void:
 		return
 
 
+func load_adv_save(path:String) -> void:
+	if AdvSaves.empty():
+		var temp = load(path)
+		if temp != null:
+			if temp.SaveMain.empty():
+				"ERR: No SaveMain Assets are available"
+				return
+			if !temp.SaveMain.empty():
+				AdvSaves = temp.SaveMain.duplicate()
+				print("Advanced Load Successful")
+	if !AdvSaves.empty():
+		return
+
+
 func save() -> void:
 	if Saves.empty():
 		return
@@ -74,3 +109,13 @@ func save() -> void:
 		temp.set("script", load("res://code/io/SaveMain.gd"))
 		temp.SaveMain = Saves.duplicate(true)
 		ResourceSaver.save(get_pth()["SavePath"], temp)
+
+
+func adv_save() -> void:
+	if AdvSaves.empty():
+		return
+	if !AdvSaves.empty():
+		var temp = Resource.new()
+		temp.set("script", load("res://code/io/SaveMain.gd"))
+		temp.SaveMain = AdvSaves.duplicate(true)
+		ResourceSaver.save(get_pth()["AdvSavePath"], temp)

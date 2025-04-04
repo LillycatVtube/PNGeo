@@ -18,9 +18,9 @@ margin_right = 1024.0
 margin_bottom = 602.0
 
 [node name="PanelContainer" type="PanelContainer" parent="Control"]
-margin_left = 705.0
+margin_left = 336.0
 margin_top = 495.0
-margin_right = 1013.0
+margin_right = 644.0
 margin_bottom = 591.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer"]
@@ -113,9 +113,9 @@ align = 1
 suffix = "FPS"
 
 [node name="FileDialog" type="FileDialog" parent="Control"]
-margin_left = 542.0
+margin_left = 253.0
 margin_top = 121.0
-margin_right = 1013.0
+margin_right = 724.0
 margin_bottom = 456.0
 window_title = "Open File(s)"
 dialog_hide_on_ok = true
@@ -125,10 +125,10 @@ filters = PoolStringArray( "*png", "*.jpg", "*.jpeg" )
 show_hidden_files = true
 
 [node name="SaveFile" type="FileDialog" parent="Control"]
-margin_left = 498.0
-margin_top = 124.0
-margin_right = 1003.0
-margin_bottom = 478.0
+margin_left = 248.0
+margin_top = 116.0
+margin_right = 753.0
+margin_bottom = 470.0
 window_title = "Save Decor"
 resizable = true
 dialog_hide_on_ok = true
